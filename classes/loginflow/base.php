@@ -73,6 +73,16 @@ class base {
     }
 
     /**
+     * Provides a hook into the login page.
+     *
+     * @param object &$frm Form object.
+     * @param object &$user User object.
+     */
+    public function loginpage_hook(&$frm, &$user) {
+        return true;
+    }
+
+    /**
      * Read user information from external database and returns it as array().
      *
      * @param string $username username
@@ -265,9 +275,14 @@ class base {
             throw new \moodle_exception('errorauthnoendpoints', 'auth_oidc');
         }
 
+        $clientid = (isset($this->config->clientid)) ? $this->config->clientid : null;
+        $clientsecret = (isset($this->config->clientsecret)) ? $this->config->clientsecret : null;
         $redirecturi = new \moodle_url('/auth/oidc/');
+        $resource = (isset($this->config->oidcresource)) ? $this->config->oidcresource : null;
+
         $client = new \auth_oidc\oidcclient($this->httpclient);
-        $client->setcreds($this->config->clientid, $this->config->clientsecret, $redirecturi->out());
+        $client->setcreds($clientid, $clientsecret, $redirecturi->out(), $resource);
+
         $client->setendpoints(['auth' => $this->config->authendpoint, 'token' => $this->config->tokenendpoint]);
         return $client;
     }
