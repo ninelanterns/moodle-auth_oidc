@@ -153,3 +153,23 @@ $configdesc = get_string('cfg_customicon_desc', 'auth_oidc');
 $setting = new admin_setting_configstoredfile('auth_oidc/customicon', $configkey, $configdesc, 'customicon');
 $setting->set_updatedcallback('auth_oidc_initialize_customicon');
 $settings->add($setting);
+
+$configkey = get_string('cfg_mapping_key', 'auth_oidc');
+$configdesc = get_string('cfg_mapping_desc', 'auth_oidc');
+$setting = new admin_setting_heading('auth_oidc/mapping', $configkey, $configdesc);
+$settings->add($setting);
+
+$configkey = get_string('cfg_firstname_key', 'auth_oidc');
+$configdesc = get_string('cfg_firstname_desc', 'auth_oidc');
+$configdefault = 'given_name';
+$settings->add(new admin_setting_configtext('auth_oidc/firstname', $configkey, $configdesc, $configdefault, PARAM_TEXT));
+
+$configkey = get_string('cfg_lastname_key', 'auth_oidc');
+$configdesc = get_string('cfg_lastname_desc', 'auth_oidc');
+$configdefault = 'family_name';
+$settings->add(new admin_setting_configtext('auth_oidc/lastname', $configkey, $configdesc, $configdefault, PARAM_TEXT));
+
+$configkey = get_string('cfg_email_key', 'auth_oidc');
+$configdesc = get_string('cfg_email_desc', 'auth_oidc');
+$configdefault = 'email';
+$settings->add(new admin_setting_configtext('auth_oidc/email', $configkey, $configdesc, $configdefault, PARAM_TEXT));

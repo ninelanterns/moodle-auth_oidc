@@ -103,17 +103,20 @@ class base {
             'idnumber' => $username,
         ];
 
-        $firstname = $idtoken->claim('given_name');
+        $cfg_firstname = empty($this->config->firstname) ? 'given_name' : $this->config->firstname;
+        $firstname = $idtoken->claim($cfg_firstname);
         if (!empty($firstname)) {
             $userinfo['firstname'] = $firstname;
         }
 
-        $lastname = $idtoken->claim('family_name');
+        $cfg_lastname = empty($this->config->lastname) ? 'family_name' : $this->config->lastname;
+        $lastname = $idtoken->claim($cfg_lastname);
         if (!empty($lastname)) {
             $userinfo['lastname'] = $lastname;
         }
 
-        $email = $idtoken->claim('email');
+        $cfg_email = empty($this->config->email) ? 'email' : $this->config->email;
+        $email = $idtoken->claim($cfg_email);
         if (!empty($email)) {
             $userinfo['email'] = $email;
         }
