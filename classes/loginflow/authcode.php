@@ -436,7 +436,7 @@ class authcode extends \auth_oidc\loginflow\base {
                 $eventdata = ['other' => ['username' => $username, 'reason' => $failurereason]];
                 $event = \core\event\user_login_failed::create($eventdata);
                 $event->trigger();
-                throw new \moodle_exception('errorauthloginfailednouser', 'auth_oidc', null, null, '1');
+                throw new \moodle_exception('errorauthloginfailednouser', 'auth_oidc', null, $username, '1');
             }
         }
 
