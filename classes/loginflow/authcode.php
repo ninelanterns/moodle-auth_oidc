@@ -407,8 +407,19 @@ class authcode extends \auth_oidc\loginflow\base {
 
         $tokenrec = $DB->get_record('auth_oidc_token', ['oidcuniqid' => $oidcuniqid]);
         if (!empty($tokenrec)) {
-            $username = $tokenrec->username;
-            $this->updatetoken($tokenrec->id, $authparams, $tokenparams);
+            ///////////////////////////////////////// Core hack - updating username if there is a change
+            // Getting UPN username
+	        $oidcusername = $idtoken->claim('upn');
+	        $oidcusername = trim(\core_text::strtolower($oidcusername));
+	        $existing_user_params = ['username' => $tokenrec->username, 'mnethostid' => $CFG->mnet_localhost_id];
+	        if (!empty($oidcusername) && $oidcusername != $tokenrec->oidcusername && $DB->record_exists('user', $existing_user_params) !== true) {
+		        $tokenrec->username = $oidcusername;
+		        $tokenrec->oidcusername = $oidcusername;
+		        $DB->update_record('auth_oidc_token', $tokenrec);
+	        }
+	        ///////////////////////////////////////// Core hack - updating username if there is a change
+	        $username = $tokenrec->username;
+	        $this->updatetoken($tokenrec->id, $authparams, $tokenparams);
         } else {
             // Use 'upn' if available for username (Azure-specific), or fall back to lower-case oidcuniqid.
             $username = $idtoken->claim('upn');
