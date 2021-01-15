@@ -153,7 +153,7 @@ class auth_plugin_oidc extends \auth_plugin_base {
      * @return bool true means automatically copy data from ext to user table
      */
     public function is_synchronised_with_external() {
-        return true;
+        return false;
     }
 
     /**
@@ -219,4 +219,14 @@ class auth_plugin_oidc extends \auth_plugin_base {
         $params = [time() - (5 * 60)];
         $DB->delete_records_select('auth_oidc_state', 'timecreated < ?', $params);
     }
+
+	/**
+	 * Logout
+	 */
+	public function postlogout_hook($user){
+		if($user->auth == $this->authtype){
+			$url = 'https://login.microsoftonline.com/common/wsfederation?wa=wsignout1.0';
+			redirect($url);
+		}
+	}
 }
