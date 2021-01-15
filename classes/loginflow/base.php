@@ -38,16 +38,16 @@ class base {
         ];
         $storedconfig = (array)get_config('auth_oidc');
         $forcedconfig = [
-            'field_updatelocal_idnumber' => 'oncreate',
-            'field_lock_idnumber' => 'unlocked',
-            'field_updatelocal_lang' => 'oncreate',
-            'field_lock_lang' => 'unlocked',
-            'field_updatelocal_firstname' => 'oncreate',
-            'field_lock_firstname' => 'unlocked',
-            'field_updatelocal_lastname' => 'oncreate',
-            'field_lock_lastname' => 'unlocked',
-            'field_updatelocal_email' => 'oncreate',
-            'field_lock_email' => 'unlocked',
+            //'field_updatelocal_idnumber' => 'oncreate',
+            'field_lock_idnumber' => 'locked',
+            //'field_updatelocal_lang' => 'oncreate',
+            'field_lock_lang' => 'locked',
+            //'field_updatelocal_firstname' => 'onlogin',
+            //'field_lock_firstname' => 'unlocked',
+            //'field_updatelocal_lastname' => 'onlogin',
+            //'field_lock_lastname' => 'unlocked',
+            //'field_updatelocal_email' => 'onlogin',
+            //'field_lock_email' => 'unlocked',
         ];
 
         // If local_o365 plugin is installed, use its settings for the core fields.
